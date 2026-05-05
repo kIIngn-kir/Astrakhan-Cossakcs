@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Казачество | Наследие Нижней Волги</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-beige: #f5f2eb;
+            --card-white: #ffffff;
+            --accent-dark: #2d2a26;
+            --cossack-blue: #3a5a8f; /* Приглушенный современный синий */
+            --cossack-gold: #d4a34d; /* Приглушенное золото */
+            --text-main: #4a453e;
+        }
+
+        * { box-sizing: border-box; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-beige);
+            font-family: 'Manrope', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Шапка */
+        .nav {
+            padding: 30px;
+            text-align: center;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #dad6d0;;
+            
+        }
+
+
+        .navv {
+            padding-bottom: 10px;
+            background-color: #ffd39a9c;
+
+        }
+
+        /* Hero блок */
+        .hero {
+            padding: 200px 20px 300px;
+            text-align: center;
+            background-image: url('./img/AK2.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 10vw, 4.5rem);
+            color: #dad6d0;;
+            margin: 0;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: 20px auto;
+            font-size: 1.1rem;
+            color: #ddd5ca;
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: minmax(220px, auto);
+            gap: 20px;
+        }
+
+        .bento-item {
+            background: var(--card-white);
+            border-radius: 32px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .bento-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+        }
+
+        .bento-item h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin: 0 0 20px 0;
+            color: var(--accent-dark);
+        }
+
+        /* Специфические блоки (Bento Layout) */
+        .item-main { grid-column: span 8; grid-row: span 2; background: var(--accent-dark); color: #e3ddd3; }
+        .item-main h2 { color: var(--bg-beige); font-size: 2.5rem; }
+
+        .item-service { grid-column: span 4; grid-row: span 2; background: var(--cossack-blue); color: white; }
+        .item-service h2 { color: white; }
+
+        .item-food { grid-column: span 5; border-bottom: 8px solid var(--cossack-gold); }
+        .item-family { grid-column: span 7; }
+
+        .item-modern { display: flex; flex-direction: row; align-items: center; gap: 40px; }
+
+
+        /* Настройка переворота */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px; /* Глубина 3D эффекта */
+            cursor: pointer;
+        }
+
+        .flip-card-inner h2 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: left;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        /* Класс, который добавляет JS при клике */
+        .flip-card.is-flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Скрывает обратную сторону */
+            backface-visibility: hidden;
+            border-radius: 32px;
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        .card-front {
+            background: var(--card-white);
+            border-radius: 32px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .card-back {
+            background-color: var(--accent-dark);
+            transform: rotateY(180deg);
+            padding: 0; /* Чтобы картинка была на весь блок */
+        }
+
+        .card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .alt {
+            padding-bottom: 350px;
+        }
+        .alt3{ padding-bottom: 400px; }
+
+        .alt4{ padding-bottom: 320px; }
+
+        .alt2 { padding-bottom: 300px; padding-top: 200px; display: flex; flex-direction: row; align-items: center; gap: 40px; }
+        /* Размеры Bento */
+        .span-8 { grid-column: span 8; grid-row: span 2; }
+        .span-44 { grid-column: span 4; grid-row: span 2; }
+        .span-4 { grid-column: span 4; }
+        .span-6 { grid-column: span 6; }
+        .span-122 { grid-column: span 12;}
+        .span-12 { grid-column: span 12; display: flex; flex-direction: row; align-items: center; gap: 40px; }
+        /* Элементы декора */
+        .tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--cossack-gold);
+        }
+
+        .highlight { font-weight: 600; color: var(--accent-dark); }
+
+        footer {
+            padding: 60px;
+            text-align: center;
+            background: #ece7de;
+            font-size: 0.9rem;
+            color: #8a8276;
+        }
+
+        /* Мобильная адаптация */
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+            .item-modern { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    
+
+    <section class="hero">
+            <div class="nav">Основано в 1750 году — Нижняя Волга</div>
+            <h1>Астраханское казачество</h1>
+            <p>Полное описание жизни, быта и воинской доблести астраханских казаков в одном цифровом архиве.</p>
+    </section>
+    <div class="navv"></div>
+    <main class="bento-grid">
+        
+
+         <!-- 1. Истоки -->
+        <div class="flip-card span-8" onclick="flip(this)">
+            <div class="flip-card-inner alt3">
+                <div class="card-front" style="background: var(--accent-dark); color: white;">
+                    <div>
+                        <span class="tag" style="color: var(--cossack-gold);">01. Дух и Свобода</span>
+                        <h2>Кто такие астраханские казаки?</h2>
+                        <p>Астраханское казачье войско — это не просто армия, а целое сообщество смелых людей, которые веками охраняли южные рубежи России. Они были своего рода «пограничным спецназом» своего времени.
+        Казаки на Нижней Волге появились еще в XVI веке, но официально войско было сформировано в 1750 году для защиты торговых путей и борьбы с набегами.
+        Их главными ценностями всегда были свобода, православие и верность Родине. Это люди, которые умели и землю пахать, и границы защищать.
+        </p>
+                    </div>
+            <div style="font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">Официально сформировано в 1750 г.</div>
+                </div>
+                <div class="card-back"><img src="./img/AK7.png" alt="Истоки"></div>
+            </div>
+        </div>
+
+        <!-- 2. Военная служба -->
+        <div class="flip-card span-44" onclick="flip(this)">
+            <div class="flip-card-inner alt3">
+                <div class="card-front" style="border-top: 6px solid var(--cossack-blue);">
+                    <div>
+                <span class="tag" style="color: rgba(31, 27, 27, 0.753);">02. Военная доблесть</span>
+                <h2>Стиль Воина</h2>
+                <p>Форма: синие мундиры с желтыми лампасами. Желтый — это цвет степей и солнца.</p>
+                <p>Мастерство джигитовки и владение шашкой делало их практически неуязвимыми в бою.</p>
+            </div>
+            <div style="font-style: italic;">Бородинское сражение, заграничные походы.</div>
+                </div>
+                <div class="card-back"><img src="./img/AK5.png" alt="Служба"></div>
+            </div>
+        </div>
+
+        <!-- 3. Домашний быт -->
+        <div class="flip-card span-122" onclick="flip(this)">
+            <div class="flip-card-inner alt">
+                <div class="card-front">
+                    <div>
+                         <span class="tag">03. Дом</span>
+                        <h2>Курень</h2>
+                        <p>Казачий дом — это целая крепость и уютное гнездо одновременно. Здесь всё было продумано до мелочей.</p>
+                        <p>Курень (казачий дом) в Астрахани часто строился на подклете (высоком фундаменте), чтобы спасаться от разливов Волги. Внутри всегда была «чистая половина» для гостей и большая печь.
+                        Двор (баз) включал в себя конюшни, амбары и летнюю кухню. Порядок на дворе считался делом чести, а за забор отвечал хозяин. </p>
+                    </div>
+                </div>
+                <div class="card-back"><img src="./img/AK8.png" alt="Быт"></div>
+            </div>
+        </div>
+
+        <!-- 4. Трапеза -->
+        <div class="flip-card span-6" onclick="flip(this)">
+            <div class="flip-card-inner alt">
+                <div class="card-front" style="background: var(--cossack-gold); color: white;">
+                    <div>
+                        <span class="tag" style="color: white;">04. Трапеза</span>
+                        <h2>Вкус Волги</h2>
+                        <p>Трапеза астраханцев — это рай для любителей рыбы. Главные блюда: балык, знаменитая астраханская уха и жареная сазанья икра. Казаки также обожали арбузы.</p>
+                    </div>
+                </div>
+                <div class="card-back"><img src="./img/AK10.png" alt="Трапеза"></div>
+            </div>
+        </div>
+
+        <!-- 5. Семья -->
+        <div class="flip-card span-6" onclick="flip(this)">
+            <div class="flip-card-inner alt">
+                <div class="card-front">
+                    <div>
+                        <span class="tag">05. Семья</span>
+                        <h2>Иерархия и Сила</h2>
+                        <p>Слово отца — закон, дед — хранитель мудрости. Но казачка была уникальной: пока муж в походах, она управляла всем и могла защитить дом с оружием в руках.</p>
+                        <p style="font-size: 0.9rem; font-style: italic;">Воспитание строилось на глубоком уважении к старшим.</p>
+                    </div>
+                </div>
+                <div class="card-back"><img src="./img/AK11.png" alt="Одежда"></div>
+            </div>
+        </div>
+
+        <!-- 6. Душа -->
+        <div class="flip-card span-4" onclick="flip(this)">
+            <div class="flip-card-inner alt">
+                <div class="card-front">
+                    <div>
+                        <span class="tag">06. Душа</span>
+                        <h2>Песни и Танцы</h2>
+                        <p>Казачья песня — это душа народа. Астраханские песни часто рассказывают о Волге, походах и тоске по дому. Пели хором, создавая мощное многоголосие.</p>
+                    </div>
+                </div>
+                <div class="card-back"><img src="./img/AK14.png" alt="Семья"></div>
+            </div>
+        </div>
+        <div class="flip-card span-4" onclick="flip(this)">
+            <div class="flip-card-inner alt">
+                <div class="card-front">
+                    <div>
+                        <span class="tag">07. Облик</span>
+                        <h2>Одежда</h2>
+                        <p>Одежда в быту была практичной. Женщины носили длинные юбки и кофты с кружевом, а мужчины вне службы — холщовые рубахи и шаровары, заправленные в сапоги.</p>
+                    </div>
+                </div>
+                <div class="card-back"><img src="./img/AK16.png" alt="Семья"></div>
+            </div>
+        </div>
+
+        <!-- 7. Традиции -->
+        <div class="flip-card span-4" onclick="flip(this)">
+            <div class="flip-card-inner alt">
+                <div class="card-front">
+                    <div>
+                        <span class="tag">08. Традиции</span>
+                        <h2>Свадьба</h2>
+                        <p>Свадьба была главным событием станицы. Это целый сериал с выкупом невесты, «пропиванием» коня и гуляньями, которые длились несколько дней.</p>
+                    </div>
+                </div>
+                <div class="card-back"><img src="./img/AK12.png" alt="Традиции"></div>
+            </div>
+        </div>
+
+        <!-- 8. Современность -->
+        <div class="flip-card span-12" onclick="flip(this)">
+            <div class="flip-card-inner alt4">
+                <div class="card-front" style="background: #ece7de;">
+                <div class="item-modern">
+                    <div style="flex: 1;">
+                    <span class="tag">09. Будущее</span>
+                        <h2>Наследие сегодня</h2>
+                        <p>В Астрахани работает казачий кадетский корпус. Подростки учатся истории, тактике и верховой езде, продолжая традиции отцов.</p>
+                    </div>
+                    <div style="flex: 1; background: var(--bg-beige); padding: 30px; border-radius: 20px; font-weight: 600; text-align: center;">
+                        «Казачество сегодня — это патриотизм и знание своих корней»
+                    </div>
+                </div>
+                </div>
+                <div class="card-back"><img src="./img/AK15.png" alt="Сегодня"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2026 ЛЕТОПИСЬ КАЗАЧЕСТВА. СОХРАНЯЯ ИСТОРИЮ В ЦИФРЕ.</p>
+        <p>Made by Razumova Angelina, Yusupalieva Alsu, Rzaev Artem, Belousov Vadim</p>
+    </footer>
+    <script>
+        function flip(el) {
+            el.classList.toggle('is-flipped');
+        }
+    </script>
+</body>
+</html>
